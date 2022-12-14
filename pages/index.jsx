@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState} from 'react'
+import { NFTCard } from "../components/nftCard"
 
 const Home = () => {
   const [wallet, setWalletAddress] = useState("");
@@ -23,8 +24,8 @@ const Home = () => {
       nfts = await fetch(fetchURL, requestOptions).then(data => data.json())
     } else {
       console.log("fetching nfts for collection owned by address")
-      const fetchURL = `${baseURL}?onwer=${wallet}&contractAddress%5B%5D=${collection}`
-      nfts= await fetch(fetchURL, requestOptions).then(data => data.json())
+      const fetchURL = `${baseURL}?owner=${wallet}&contractAddresses%5B%5D=${collection}`;
+      nfts = await fetch(fetchURL, requestOptions).then(data => data.json())
     }
 
     if (nfts) {
@@ -40,7 +41,7 @@ const Home = () => {
       };
       const api_key = "2ik4h9lpDcwUf0Lh26K386nB5i3GreMF"
       const baseURL = `https://eth-mainnet.g.alchemy.com/v2/${api_key}/getNFTsForCollection`;
-      const fetchURL = `${baseURL}?contractAddress${collection}&withMetadata=${"true"}`;
+      const fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`;
       const nfts = await fetch(fetchURL, requestOptions).then(data => data.json())
       if (nfts) {
         console.log("NFTs in collection:", nfts)
@@ -62,6 +63,16 @@ const Home = () => {
             } else fetchNFTs()
           }
         }>LFG!</button>
+      </div>
+      <div className="flex flex-wrap gap-y-12 mt-4 w-5/6 gap-x-2 justify-center">
+        {
+          NFTs.length && NFTs.map(nft => {
+            return (
+              <NFTCard nft={nft}>
+              </NFTCard>
+            )
+          })
+        }
       </div>
     </div>
     )
