@@ -64,7 +64,7 @@ const Home = () => {
           }
         }>LFG!</button>
       </div>
-      <div className="grid grid-cols-20 hover:grid-cols-10">
+      <div className="grid grid-cols-20 hover:grid-cols-20">
         {
           NFTs.length && NFTs.map(nft => {
             return (
